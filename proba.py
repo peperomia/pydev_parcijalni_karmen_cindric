@@ -95,6 +95,28 @@ for item in customers:
     name = str(count) + "." + item["name"]
     names_list.append(name)
 print(*names_list, sep = "\n")
+#-----------------------------------------------------------------------------------
+# TODO: Implementirajte funkciju za kreiranje nove ponude.
+#def create_new_offer(offers, products, customers):
+    """
+    Prompt user to create a new offer by selecting a customer, entering date,
+    choosing products, and calculating totals.
+    """
+print("Kreirajte novu ponudu")
+offers = load_data("offers.json")
+offer = len(offers) + 1
+    # # Omogućite unos kupca
+    # print("Izaberite kupca iz liste kupaca: ")
+    # names_list = []
+    # count = 0
+    # for item in customers:
+    #     count += 1
+    #     name = str(count) + "." + item["name"]
+    #     names_list.append(name)
+    # print(*names_list, sep = "\n")
+    # ime_kupca = str(input("Unesite broj pored imena kupca: "))
+
+    # unos datuma
 
 # dan = input("Unesite koji je danas dan u mjesecu: ")
 # datum = "2024-11-" + dan
@@ -154,7 +176,7 @@ kosarica_proizvoda = {"id" : idd,
 
 print(kosarica_proizvoda)
 collected_items = []  # lista
-for item in idd:
+for item in idd:   # ovo se može bolje napraviti tako da su poredani po redu, ali za sada šljaka
     item_dict = products[int(item) - 1]
     item_dict["quantity"] = kolicina_proizvoda[idd.index(item)]
     item_dict["item_total"] = products[int(item) - 1]["price"] * kolicina_proizvoda[idd.index(item)]
@@ -164,12 +186,8 @@ for item in idd:
     collected_items.append(item_dict)
 
 print(collected_items)
-final_dict = {
-    "offer_number" : offer
-}
 
-print(final_dict)
-
+final_dict = {}
 
     
     
