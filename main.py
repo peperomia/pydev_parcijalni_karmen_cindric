@@ -27,7 +27,7 @@ def save_data(filename: str, data: dict)-> None:
 
 
 # TODO: Implementirajte funkciju za kreiranje nove ponude.
-def create_new_offer(offers: list, products: list, customers: list)-> dict:
+def create_new_offer(offers: list, products: list, customers: list)-> None:
     """
     Prompt user to create a new offer by selecting a customer, entering date,
     choosing products, and calculating totals.
@@ -224,7 +224,7 @@ def manage_products(products: list)-> None:  # novi podaci se spremaju u listu
 
 
 # TODO: Implementirajte funkciju za upravljanje kupcima.
-def manage_customers(customers: list)->list:
+def manage_customers(customers: list)->None:
     """
     Allows the user to add a new customer or view all customers.
     """
@@ -277,7 +277,7 @@ def manage_customers(customers: list)->list:
 
 
 # TODO: Implementirajte funkciju za prikaz ponuda.
-def display_offers(offers: list)-> list|dict:
+def display_offers(offers: list)->None:
     """
     Display all offers, offers for a selected month, or a single offer by ID.
     """
