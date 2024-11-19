@@ -212,5 +212,31 @@
         "sub_total": 700.0,
         "tax": 70.0,
         "total": 770.0
+    },
+    {
+        "offer_number": 8,
+        "customer": "Tech Solutions",
+        "date": "2024-11-18",
+        "items": [
+            {
+                "product_id": 2,
+                "product_name": "Smartphone",
+                "description": "6-inch display, 128GB storage",
+                "price": 500.0,
+                "quantity": 3,
+                "item_total": 1500.0
+            },
+            {
+                "product_id": 5,
+                "product_name": "Monitor",
+                "description": "24-inch Full HD display",
+                "price": 150.0,
+                "quantity": 1,
+                "item_total": 150.0
+            }
+        ],
+        "sub_total": 1650.0,
+        "tax": 165.0,
+        "total": 1815.0
     }
 ]

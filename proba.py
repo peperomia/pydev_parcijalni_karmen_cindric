@@ -1,8 +1,8 @@
 import json
 
 with open("offers.json", "r") as file:
-    lst = json.load(file)
-# print(lst)
+    offers= json.load(file)
+#print(lst)
 # dd = []
 # for item in lst:
 #     print(item["date"][5:7])  # svi su u jedanaestom mjesecu
@@ -98,10 +98,11 @@ print(*names_list, sep = "\n")
 #-----------------------------------------------------------------------------------
 # TODO: Implementirajte funkciju za kreiranje nove ponude.
 #def create_new_offer(offers, products, customers):
-    """
+"""
     Prompt user to create a new offer by selecting a customer, entering date,
     choosing products, and calculating totals.
-    """
+"""
+"""
 print("Kreirajte novu ponudu")
 offers = load_data("offers.json")
 offer = len(offers) + 1
@@ -118,9 +119,9 @@ offer = len(offers) + 1
 
     # unos datuma
 
-# dan = input("Unesite koji je danas dan u mjesecu: ")
-# datum = "2024-11-" + dan
-# print(datum)
+dan = input("Unesite koji je danas dan u mjesecu: ")
+datum = "2024-11-" + dan
+print(datum)
 
 for item in customers: 
         ime = item["name"]
@@ -168,27 +169,51 @@ while True:
     nastavak = input("Želite li nastaviti kupovati? (da/ne): ").lower()
     if nastavak == "ne":
         break
-print(id)
 
-kosarica_proizvoda = {"id" : idd,
-                        "kolicina" : kolicina_proizvoda}
-#cijena =
-
-print(kosarica_proizvoda)
 collected_items = []  # lista
-for item in idd:   # ovo se može bolje napraviti tako da su poredani po redu, ali za sada šljaka
-    item_dict = products[int(item) - 1]
+for item in idd:   
+    item_dict = {}
+    item_dict["product_id"] = products[int(item) - 1]["id"]
+    item_dict["product_name"] = products[int(item) - 1]["name"]
+    item_dict["description"] = products[int(item) - 1]["description"]
+    item_dict["price"] = products[int(item) - 1]["price"]
     item_dict["quantity"] = kolicina_proizvoda[idd.index(item)]
     item_dict["item_total"] = products[int(item) - 1]["price"] * kolicina_proizvoda[idd.index(item)]
-    item_dict["product_id"] = item_dict.pop("id")
-    item_dict["product_name"] = item_dict.pop("name")
-
+    
     collected_items.append(item_dict)
 
-print(collected_items)
-
+#print(collected_items)
+#ime_kupca = 3
+sub_total = sum([item["item_total"] for item in collected_items])
+tax = round(float(sum([item["item_total"] for item in collected_items])) * (0.1), 1) # tax = 10% od sub_total
 final_dict = {}
+final_dict["offer_number"] = int(offer)
+final_dict["customer"] = customers[ime_kupca - 1]["name"] ### vidi još koja je točno varijabla
+final_dict["date"] = datum
+final_dict["items"] = collected_items
+final_dict["sub_total"] = sub_total
+final_dict["tax"] = tax
+final_dict["total"] = sub_total + tax
+# print(customers[ime_kupca-1]["name"])
+# print(json.dumps(final_dict))
+# with open("zapis_json_proba.json", "a") as file:
+#    json.dump(final_dict, file, indent = 4)
+"""
+#-----------------------------------------------------------------------------------
+#----------------------------------------------------------def print_offer(offer)
+def print_offer(offer):
+    """Display details of a single offer."""
+    print(f"Ponuda br: {offer['offer_number']}, Kupac: {offer['customer']}, Datum ponude: {offer['date']}")
+    print("Stavke:")
+    for item in offer["items"]:
+        print(f"  - {item['product_name']} (ID: {item['product_id']}): {item['description']}")
+        print(f"    Kolicina: {item['quantity']}, Cijena: ${item['price']}, Ukupno: ${item['item_total']}")
+    print(f"Ukupno: ${offer['sub_total']}, Porez: ${offer['tax']}, Ukupno za platiti: ${offer['total']}")
+print("print_offer")
+print_offer(offers[1])
 
-    
+
+
+
     
     

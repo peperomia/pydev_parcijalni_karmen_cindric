@@ -1,0 +1,126 @@
+
+    "offer_number": 8,
+    "customer": "Blue Sky Innovations",
+    "date": "datum",
+    "items": [
+        {
+            "description": "4K HDR, 1TB storage",
+            "price": 400.0,
+            "quantity": 11,
+            "item_total": 4400.0,
+            "product_id": 15,
+            "product_name": "Gaming Console"
+        },
+        {
+            "description": "Bluetooth, portable",
+            "price": 45.0,
+            "quantity": 10,
+            "item_total": 450.0,
+            "product_id": 11,
+            "product_name": "Speaker"
+        }
+    ],
+    "sub_total": 4850.0,
+    "tax": 485.0,
+    "total": 5335.0
+}{
+    "offer_number": 8,
+    "customer": "Blue Sky Innovations",
+    "date": "datum",
+    "items": [
+        {
+            "product_id": 11,
+            "product_name": "Speaker",
+            "description": "Bluetooth, portable",
+            "price": 45.0,
+            "quantity": 10,
+            "item_total": 450.0
+        },
+        {
+            "product_id": 11,
+            "product_name": "Speaker",
+            "description": "Bluetooth, portable",
+            "price": 45.0,
+            "quantity": 10,
+            "item_total": 450.0
+        }
+    ],
+    "sub_total": 900.0,
+    "tax": 90.0,
+    "total": 990.0
+}{
+    "offer_number": 8,
+    "customer": "Blue Sky Innovations",
+    "date": "datum",
+    "items": [
+        {
+            "product_id": 12,
+            "product_name": "Smartwatch",
+            "description": "Fitness tracking, heart rate monitor",
+            "price": 150.0,
+            "quantity": 10,
+            "item_total": 1500.0
+        },
+        {
+            "product_id": 12,
+            "product_name": "Smartwatch",
+            "description": "Fitness tracking, heart rate monitor",
+            "price": 150.0,
+            "quantity": 10,
+            "item_total": 1500.0
+        }
+    ],
+    "sub_total": 3000.0,
+    "tax": 300.0,
+    "total": 3300.0
+}{
+    "offer_number": 8,
+    "customer": "Blue Sky Innovations",
+    "date": "datum",
+    "items": [
+        {
+            "product_id": 15,
+            "product_name": "Gaming Console",
+            "description": "4K HDR, 1TB storage",
+            "price": 400.0,
+            "quantity": 10,
+            "item_total": 4000.0
+        },
+        {
+            "product_id": 11,
+            "product_name": "Speaker",
+            "description": "Bluetooth, portable",
+            "price": 45.0,
+            "quantity": 10,
+            "item_total": 450.0
+        }
+    ],
+    "sub_total": 4450.0,
+    "tax": 445.0,
+    "total": 4895.0
+}{
+    "offer_number": 8,
+    "customer": "Blue Sky Innovations",
+    "date": "2024-11-16",
+    "items": [
+        {
+            "product_id": 15,
+            "product_name": "Gaming Console",
+            "description": "4K HDR, 1TB storage",
+            "price": 400.0,
+            "quantity": 10,
+            "item_total": 4000.0
+        },
+        {
+            "product_id": 11,
+            "product_name": "Speaker",
+            "description": "Bluetooth, portable",
+            "price": 45.0,
+            "quantity": 10,
+            "item_total": 450.0
+        }
+    ],
+    "sub_total": 4450.0,
+    "tax": 445.0,
+    "total": 4895.0
+}
