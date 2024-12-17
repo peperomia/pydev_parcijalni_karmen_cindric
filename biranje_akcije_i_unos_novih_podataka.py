@@ -259,8 +259,12 @@ def create_new_offer()-> None:
             session.add(new_offer)
             session.commit()
             with Session(engine) as session:
-                
-                new_offer_specs = CustomerProductLink(product_id=idd, customer_id=id_kupca, offer_id=)
+                statement = select(Offer)
+                result = session.exec(statement).all()
+                for offer in result:
+                    last_offer_id = offer.id
+
+                new_offer_specs = CustomerProductLink(product_id=idd, customer_id=id_kupca, offer_id=last_offer_id, quantity=)
         except Exception as e:
             print(f"Dogodila se greska - {e}")
             print("Pažljivo pročitajte upute prilikom unosa podataka i pazite da se uneseni brojevi za opciju nalaze među ponuđenima")
