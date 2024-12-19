@@ -14,12 +14,13 @@ import json
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select
 from datetime import date
 
-from klase import Customer, Product, Offer, OfferProductLink
+from klase_nove import Customer, Product, Offer, OfferProductLink
 
-from funkcije import *
+from funkcije_nove import *
 
 engine = create_engine("sqlite:///parcijalaDB_Modul_NOVE_KLASE.db")
 SQLModel.metadata.create_all(engine)
+
 
 OFFERS_FILE = "offers.json"
 PRODUCTS_FILE = "products.json"

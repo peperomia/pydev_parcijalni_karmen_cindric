@@ -2,10 +2,16 @@ import json
 
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select
 
-from klase import Customer, Product, Offer, OfferProductLink
+from klase_nove import Customer, Product, Offer, OfferProductLink
 
 engine = create_engine("sqlite:///parcijalaDB_Modul_NOVE_KLASE.db")
 SQLModel.metadata.create_all(engine)
+
+OFFERS_FILE = "offers.json"
+PRODUCTS_FILE = "products.json"
+CUSTOMERS_FILE = "customers.json"
+
+
 
 def load_data(filename: str)-> list:
     """Load data from a JSON file."""
@@ -23,6 +29,10 @@ def save_data(filename: str, data: dict)-> None:
     """Save data to a JSON file."""
     with open(filename, "w") as file:
         json.dump(data, file, indent=4)
+
+offers = load_data(OFFERS_FILE)
+products = load_data(PRODUCTS_FILE)
+customers = load_data(CUSTOMERS_FILE)        
 
 def manage_customers(customers: list)->None:
     """
@@ -47,6 +57,7 @@ def display_offers(offers: list)->None:
     offer_list = []
     items_list = []
     for offer in offers:
+        offer_id = offer["offer_number"]
         customer_name = offer["customer"]
         date = offer["date"]
         items = offer["items"]  # another list of dicts->  petlja?
@@ -65,7 +76,7 @@ def display_offers(offers: list)->None:
                 customer_id = result.id
                 #print(customer_id, "customer_id ušlo u 'with Session'")  # OK, radi linija
                 #print(result.id) # OK, radi linija
-                item_bought = OfferProductLink(product_id = product_id, quantity = quantity, customer_id = customer_id, item_total = item_total)
+                item_bought = OfferProductLink(product_id = product_id, offer_id = offer_id, quantity = quantity, item_total = item_total)
                 items_list.append(item_bought)
 
         sub_total = offer["sub_total"]
