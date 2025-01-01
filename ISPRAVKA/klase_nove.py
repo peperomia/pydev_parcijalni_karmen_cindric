@@ -9,9 +9,9 @@ class OfferProductLink(SQLModel, table = True):
     """ ovdje printa def display_items_in_offers(offers) funkcija """
     __tablename__ = "offer_product"
     id: int = Field(default = None, primary_key=True)
+    offer_id: int = Field(foreign_key = "offer.id")
     product_id: int = Field(foreign_key = "product.id")
     # customer_id: int = Field(foreign_key = "customer.id", primary_key = True)
-    offer_id: int = Field(foreign_key = "offer.id")
     quantity: int
     item_total: float
     #  u tablici offer:
@@ -46,7 +46,7 @@ class Product(SQLModel, table = True):
 class Offer(SQLModel, table = True):
     id: int = Field(default = None, primary_key = True)
     customer_name: str 
-    date: str
+    date: date
     #items:  #list["Product"] = Relationship(back_populates="offer")
     sub_total: float  # zbroj svih (item * quantity)
     tax: float  # izračunati porez kao % od prethodne stavke

@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select
 
@@ -59,7 +60,7 @@ def display_offers(offers: list)->None:
     for offer in offers:
         offer_id = offer["offer_number"]
         customer_name = offer["customer"]
-        date = offer["date"]
+        date = oblikovanje_datuma(offer["date"])
         items = offer["items"]  # another list of dicts->  petlja?
         for item in items:
             product_id = item["product_id"]
@@ -87,15 +88,7 @@ def display_offers(offers: list)->None:
         
     return offer_list
 
-def print_offer(offer: dict)-> None: # funkcija ispisuje u konzolu, ali ne vraća ništa (prazna varijabla)
-    # dict u parametru je rezultat offers[index]
-    """Display details of a single offer."""
-    print(f"Ponuda br: {offer['offer_number']}, Kupac: {offer['customer']}, Datum ponude: {offer['date']}")
-    print("Stavke:")
-    for item in offer["items"]:
-        print(f"  - {item['product_name']} (ID: {item['product_id']}): {item['description']}")
-        print(f"    Kolicina: {item['quantity']}, Cijena: ${item['price']}, Ukupno: ${item['item_total']}")
-    print(f"Ukupno: ${offer['sub_total']}, Porez: ${offer['tax']}, Ukupno za platiti: ${offer['total']}")
+
     
 def get_names_from_offers(offers: list):
     """vadi imena iz liste offers, jer kupaca u većini slučajeva nema u customers.json"""
@@ -151,3 +144,25 @@ def display_items_in_offers(offers):
                 item_bought = OfferProductLink(product_id = product_id, quantity = quantity, item_total = item_total, offer_id = offer_number)
                 items_list.append(item_bought)
     return items_list    
+
+
+def oblikovanje_datuma(datum: str)-> date:
+    """Izvlači varijablu "date" iz offers liste rječnika, te za svaki datum, koji je string u obliku "YYYY-MM-DD",
+    izvlači komponente kako bi ih pakirala u obliku (YYYY, MM, DD), što metoda date iz modula datetime uzima kao
+    argument za pretvaranje u objekt tipa date
+    """
+   
+    datum_splitted = datum.split("-")  # rezultat je lista
+    datum_splitted_int = [int(string) for string in datum_splitted]
+    date_parsed = date(datum_splitted_int[0], datum_splitted_int[1], datum_splitted_int[2]) 
+    
+    return date_parsed
+
+# oblikovanje_datuma(offers[0]["date"])
+# print(oblikovanje_datuma(offers[0]["date"]))
+
+#print(display_offers(offers))
+
+
+
+

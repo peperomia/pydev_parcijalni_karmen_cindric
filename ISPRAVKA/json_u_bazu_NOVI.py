@@ -45,6 +45,8 @@ with Session(engine) as session:
         print(e)
     
 extra_customers = get_names_from_offers(offers = offers) 
+
+
 # print(extra_customers[1].name, " ****************")
 
 with Session(engine) as session:
