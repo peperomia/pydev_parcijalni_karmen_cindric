@@ -1,12 +1,12 @@
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select
 from datetime import date, datetime
 
-from klase_nove import Customer, Product, Offer, OfferProductLink
+from klase_za_bazu import Customer, Product, Offer, OfferProductLink
 
-from funkcije_nove import oblikovanje_datuma
+from funkcije import *
 
-# engine = create_engine("sqlite:///parcijalaDB_Modul_NOVE_KLASE.db")
-# #SQLModel.metadata.create_all(engine)
+engine = create_engine("sqlite:///ParcijalaDB.db")
+SQLModel.metadata.create_all(engine)
 
 
 
@@ -56,9 +56,8 @@ def manage_customers()->None:  #    RADI OK
             flag = False
         
         
-# manage_customers()
 
-def manage_products()-> None:  # RADI OK
+def manage_products()-> None: 
     """
     Allows the user to add a new product or modify an existing product.
     """
@@ -156,7 +155,6 @@ def manage_products()-> None:  # RADI OK
 
 
 
-# manage_products()
 
 def create_new_offer()-> None:
     """
@@ -164,7 +162,6 @@ def create_new_offer()-> None:
     choosing products, and calculating totals.
     """
     with Session(engine) as session:
-        # flag = True
         while True:
             print("Kreirajte novu ponudu")
             # Omogućite unos kupca
@@ -182,10 +179,11 @@ def create_new_offer()-> None:
             while flag:
                 try:
                     print("Unesite datum ponude: ")
-                    dan = int(input("Unesite dan u mjesecu, od 1 do 31 \n (vodite računa o mjesecu):").rstrip(chars = "."))
-                    mjesec = int(input("Unesite mjesec kao broj: (1 do 12): ").rstrip(chars = "."))
-                    godina = int(input("Unesite godinu sa 4 znamenke: ").rstrip(chars = "."))
-                    datum = oblikovanje_datuma(godina, mjesec, dan)
+                    dan = input("Unesite dan u mjesecu, od 1 do 31 \n (vodite računa o mjesecu):").rstrip(".")
+                    mjesec = input("Unesite mjesec kao broj: (1 do 12): ").rstrip(".")
+                    godina = input("Unesite godinu sa 4 znamenke: ").rstrip(".")
+                    datum_string = "-".join((godina, mjesec, dan))
+                    datum = oblikovanje_datuma(datum_string)
                 except Exception as e:
                     print(e)                        
                     print("Krivo ste unijeli datum")
@@ -208,7 +206,7 @@ def create_new_offer()-> None:
 
 
             # odabir proizvoda -> PETLJA
-            kontejner_id_brojeva = []  # sakuplja id brojeve kupljrnih proizvoda
+            kontejner_id_brojeva = []  # sakuplja id brojeve kupljenih proizvoda
             kolicina_proizvoda = []
             while True:
                 print("-"*110)
@@ -270,18 +268,14 @@ def create_new_offer()-> None:
                 print(f"Dogodila se greska - {e}")
                 print("Pažljivo pročitajte upute prilikom unosa podataka i pazite da se uneseni brojevi za opciju nalaze među ponuđenima")
             
-            nova_nova_ponuda = input("Želite li stvoriti još jednu novu ponudu? (da/ne) ")
+            nova_nova_ponuda = input("Želite li stvoriti još jednu novu ponudu? (da/ne) ").lower()
             if nova_nova_ponuda != "da":
                 break
 
-# create_new_offer()
-# -----------------------------------------------------------------------------------------------------------------------------------
 
 # Pomoćna funkcija za prikaz jedne ponude
 def print_offer(offer: Offer)-> None: # funkcija ispisuje u konzolu, ali ne vraća ništa (prazna varijabla)   
     #
-    #  RADI SADA
-    # dict u parametru je rezultat offers[index]
     """Display details of a single offer."""
     print()
     print(f"Ponuda br: {offer.id}, Kupac: {offer.customer_name}, Datum ponude: {offer.date}")
@@ -297,7 +291,7 @@ def print_offer(offer: Offer)-> None: # funkcija ispisuje u konzolu, ali ne vra�
     print(f"Ukupno: ${offer.sub_total}, Porez: ${offer.tax}, Ukupno za platiti: ${offer.total}")
 
 
-# TODO: Implementirajte funkciju za prikaz ponuda.
+# funkcija za prikaz ponuda.
 def display_offers()->None:
     """
     Display all offers, offers for a selected month, or a single offer by ID.
@@ -380,23 +374,12 @@ def display_offers()->None:
         else:
             print("Krivi izbor. Pokušajte ponovo.")
 
-# display_offers()
 
 def main():
-    # konstrukcija baze
-
-    engine = create_engine("sqlite:///parcijalaDB_Modul_NOVE_KLASE.db")
-    SQLModel.metadata.create_all(engine)
-
-    # konstrukcija klasa/tablica
-    klase_nove
-
-
-
-    # # Učitavanje podataka iz JSON datoteka
-    # offers = load_data(OFFERS_FILE)
-    # products = load_data(PRODUCTS_FILE)
-    # customers = load_data(CUSTOMERS_FILE)
+    """ova funkcija podrazumijeva da je baza podataka stvorena i napunjena podacima iz
+    json datoteka. Baza podataka se zove parcijalaDB_Modul_NOVE_KLASE.db i spremljena je u 
+    folderu PYDEV_PARCIJALNI_KARMEN_CINDRIC
+    """
 
     while True:
         print("\nOffers Calculator izbornik:")
@@ -408,18 +391,18 @@ def main():
         choice = input("Odabrana opcija: ")
 
         if choice == "1":
-            create_new_offer(offers, products, customers)
+            create_new_offer()
         elif choice == "2":
-            manage_products(products)
+            manage_products()
         elif choice == "3":
-            manage_customers(customers)
+            manage_customers()
         elif choice == "4":
-            display_offers(offers)
+            display_offers()
         elif choice == "5":
-            # Pohrana podataka prilikom izlaza
-            save_data(OFFERS_FILE, offers)
-            save_data(PRODUCTS_FILE, products)
-            save_data(CUSTOMERS_FILE, customers)
+            # Zato što se radi s bazama podataka, podaci se commitaju (spremaju u bazu)
+            # odmah nakon što se stvore, nije implementirana zasebna save_data() funkcija 
+            # koja bi spremala podatke u bazu
+            
             break
         else:
             print("Krivi izbor. Pokusajte ponovno.")

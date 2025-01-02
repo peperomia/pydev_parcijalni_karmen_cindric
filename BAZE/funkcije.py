@@ -3,9 +3,10 @@ from datetime import date
 
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select
 
-from klase_nove import Customer, Product, Offer, OfferProductLink
+from klase_za_bazu import Customer, Product, Offer, OfferProductLink
 
-engine = create_engine("sqlite:///parcijalaDB_Modul_NOVE_KLASE.db")
+
+engine = create_engine("sqlite:///ParcijalaDB.db")
 SQLModel.metadata.create_all(engine)
 
 OFFERS_FILE = "offers.json"
@@ -70,13 +71,9 @@ def display_offers(offers: list)->None:
             quantity = item["quantity"]
             item_total = item["item_total"]  # price * quantity za taj item
             with Session(engine) as session:
-                #print("ušlo u 'with Session'")  # OK, radi linija
                 statement = select(Customer).where(Customer.name == "Alice Johnson")
                 result = session.exec(statement).first()
-                #print(result.id, "ušlo u 'with Session'") # OK, radi linija
                 customer_id = result.id
-                #print(customer_id, "customer_id ušlo u 'with Session'")  # OK, radi linija
-                #print(result.id) # OK, radi linija
                 item_bought = OfferProductLink(product_id = product_id, offer_id = offer_id, quantity = quantity, item_total = item_total)
                 items_list.append(item_bought)
 
@@ -94,9 +91,7 @@ def get_names_from_offers(offers: list):
     """vadi imena iz liste offers, jer kupaca u većini slučajeva nema u customers.json"""
     customers_from_offers = []
     for item in offers:
-        print(item)
         kupac = item["customer"] # nema nikakvih dodatnih podataka o kupcu, niti mail niti vat_id
-        print(kupac)
         kupac_objekt = Customer(name = kupac, email = "", vat_id = "")
         customers_from_offers.append(kupac_objekt)
     return customers_from_offers
@@ -123,7 +118,6 @@ def display_items_in_offers(offers):
     for offer in offers:
         offer_number = offer["offer_number"]
         customer_name = offer["customer"]
-        print(customer_name)
         date = offer["date"]
         items = offer["items"]  # another list of dicts->  petlja?
         for item in items:
@@ -134,13 +128,9 @@ def display_items_in_offers(offers):
             quantity = item["quantity"]
             item_total = item["item_total"]  # price * quantity za taj item
             with Session(engine) as session:
-                print("ušlo u 'with Session'")  # OK, radi linija
                 statement = select(Customer).where(Customer.name == customer_name)
                 result = session.exec(statement).first()
-                print(result.id, "ušlo u 'with Session'") # OK, radi linija
                 customer_id = result.id
-                #print(customer_id, "customer_id ušlo u 'with Session'")  # OK, radi linija
-                #print(result.id) # OK, radi linija
                 item_bought = OfferProductLink(product_id = product_id, quantity = quantity, item_total = item_total, offer_id = offer_number)
                 items_list.append(item_bought)
     return items_list    
@@ -158,10 +148,8 @@ def oblikovanje_datuma(datum: str)-> date:
     
     return date_parsed
 
-# oblikovanje_datuma(offers[0]["date"])
-# print(oblikovanje_datuma(offers[0]["date"]))
 
-#print(display_offers(offers))
+
 
 
 
